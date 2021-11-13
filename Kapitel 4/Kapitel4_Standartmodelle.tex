@@ -1,0 +1,134 @@
+\documentclass[a4paper,11pt]{scrartcl}
+\usepackage[a4paper, left=2cm, right=2cm, top=2cm, bottom=3cm]{geometry} % kleinere Ränder
+
+% Umlaute in der Datei erlauben, auf Deutsch umstellen
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+% Mathesymbole und Ähnliches
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{microtype}
+\usepackage{stmaryrd}
+
+% Abbildungen
+\usepackage{tikz}
+\usetikzlibrary{arrows,calc}
+
+% Bessere Kontrolle über floats
+\usepackage{float}
+
+% Aufzählungen anpassen (alternativ: \arabic, \alph)
+%\renewcommand{\labelenumi}{(\roman{enumi})}
+
+
+\begin{document}
+
+% Kopfzeile (nur Nummer der Übung und Namen/MatrNr. müssen verändert werden)
+{\raggedright
+\begin{tabular}{l}
+    Stocha Recap \\
+    SS 2021 \\
+    \today{}
+\end{tabular}}
+\hfill
+{\Large Kapitel 4: Standardmodelle}
+\hfill
+\begin{tabular}{r}
+    Spartak Ehrlich \\
+    Stocha ist doof
+\end{tabular}
+\hrule
+
+\section{Grundlagen + Laplace}
+\begin{itemize}
+    \item Ziel: Beschreibung klassischer Standardmodelle + deren Herleitung
+    \item Laplace Raum: Jedes Ergebnis gleich Wahrscheinlich, d.h. jedes Ereignis ist definiert durch: $\frac{|A|}{|\Omega|} := U_\Omega (A)$
+    \item $\Rightarrow \omega \rightarrow \frac{1}{|\Omega|}$ (Im endlichen Raum!)
+    \item Für den unendlichen Raum: $\frac{\lambda ^n (A)}{\lambda^n (\Omega)}$
+\end{itemize}
+
+\section{Urnenmodell und die Verteilungen}
+
+\subsection{Generell:}
+
+\begin{itemize}
+    \item Trick: Murmelmodell mit Laplace Raum verbinden (d.h. Zahlen durch nummerieren), dann fiktiven Raum auf die möglichen Räume abbilden
+    \item $N :=$ Anzahl der Kugeln in der Urne
+    \item $F :=$ Menge der verschiedenen Farben der Kugeln in der Urne
+    \item $N_f:=$ Anzahl f-farbiger Kugeln
+    \item $\Rightarrow N = \sum_{f \in F} N_f$
+    \item $n :=$ Anzahl Ziehungen
+    \item Brauchen noch eine Färbungsfunktion, die von den nummerierten Kugeln auf ihre Farbe abbildet
+    \item $\phi :[1:N] \rightarrow F$ surjektiv und $F_f := \{ i \in [1:N] | $i-te Kugel ist f-farbig$\} = \phi^{-1}[\{f\}]$
+    \item $X: \Omega \rightarrow \Omega^{\prime}$, $p$ ist eine Zähldichte mit $ p(\omega) = P(\{\omega\})$
+    \item $\Rightarrow p_X$ definiert durch $p_X(\omega^{\prime}) = P(X=\omega^\prime) = \sum_{\omega: X(\omega) = \omega^\prime} p(\omega)$
+    \item Dann gilt für alle Ereignisse A: $P_X(A^\prime) = \sum_{\omega^\prime \in A^\prime} p_X(\omega^\prime)$
+\end{itemize}
+
+\subsection{Mit Zurücklegen Mit Reihenfolge:}
+
+\begin{itemize}
+    \item $\Omega_{ZR} = F^n$ ist der Raum der Farbenfolgen
+    \item Abbildung $X_{ZR}:[1:N] \ni (\omega_1,...,\omega_n) \rightarrow (\phi (\omega_1),...,\phi (\omega_n)) \in F^n$
+    \item $f = (f_1,...,f_n) \in F^n$ ist eine Farbfolge
+    \item $\Rightarrow P_{ZR}(f) = \prod_{i=1}^n \frac{N_{f_i}}{N}$ Grob gesagt: Das Produkt der Wahrscheinlichkeiten das diese Farbe kommt
+    \item z.B. (R,R,B,G,G) $\Rightarrow \frac{3}{6} \cdot \frac{3}{6} \cdot \frac{2}{6} \cdot \frac{1}{6} \cdot \frac{1}{6}$ wenn es 3 Rote, 2 Blaue und 1 Grüne Kugel gäbe
+    \item \textbf{Spezialfall: Bernoulli Verteilung:} Nur zwei Kugeln (Erfolg, Misserfolg) $\Rightarrow p^k \cdot q^{n-k}$ wenn man k mal Erfolg aus n Ziehungen hat
+\end{itemize}
+
+\subsection{Mit Zurücklegen Ohne Reihenfolge:}
+
+\begin{itemize}
+    \item Reihenfolge ist nun egal, d.h. alle Permutationen einer Folge interessieren und NICHT mehr.
+    \item $P_{Zr} (H) = \binom{n}{H} \cdot \prod_{f \in F} (\frac{N_f}{F})^{H(f)}$, wobei $\binom{n}{H} := \frac{n!}{\prod_{f \in F} H(f)!}$
+    \item wird auch die \textbf{Multinominalverteilung} genannt!
+    \item Generell gleiche Formel wie mit Reihenfolge, nur dass am Anfang mit dem Multinominalkoeffizient alle Permutationen raus multipliziert werden!
+    \item z.B. $\frac{6!}{3! \cdot 1! \cdot 2!} \cdot \frac{4}{8}^3 \cdot \frac{1}{8}^1 \cdot \frac{3}{8}^2$ bei 3 Roten, 1 Blauen, 2 Grünen Kugeln
+    \item \textbf{Spezialfall: Binominal Verteilung:} Nur zwei Kugeln (Erfolg, Misserfolg) $\Rightarrow B_{n,p}(k) := \binom{n}{k} \cdot p^k \cdot (1-p)^{n-k}$ (Hier normaler Binominalkoeffizient, da die identisch sind!)
+\end{itemize}
+
+\subsection{Ohne Zurücklegen Mit Reihenfolge:}
+
+\begin{itemize}
+    \item Man geht vom Raum ohne Doppelungen der Nummern aus und macht wieder zwei Abbildungen
+    \item $\Rightarrow P_{zR}(f) = \frac{\prod_{f \in F} (N_f)_{n_f}}{(N)_n}$
+\end{itemize}
+
+\subsection{Ohne Zurücklegen Ohne Reihenfolge:}
+
+\begin{itemize}
+    \item Genau dasselbe, aber mit zwei anderen ZV (aber wieder Vergröberung zu Histogramm)
+    \item $P_Y (H) = \frac{\prod_{f \in F} \binom{N_f}{h_f}}{\binom{N}{n}}$ auch die \textbf{hypergeometrische Verteilung} genannt
+    \item z.B. $\frac{\binom{3}{4} \cdot \binom{28}{7}}{\binom{32}{10}}$ für 3 Asse aus 32 Karten ziehen ($N_f$ ist die Anzahl an Farben, $h_f$ die die man ziehen will daraus)
+\end{itemize}
+
+\subsection{Geometrische Verteilung}
+
+\begin{itemize}
+    \item Wann das erste mal Erfolg bei einer unendlichen Folge?
+    \item $\Rightarrow P(k) = p \cdot (1-p)^{k-1}$ k-1 mal Misserfolg und beim k-ten mal Erfolg
+    \item ist ein W-Maß (kann man mittels Geometrischer Reihe beweisen)
+    \item Anmerkung (aber eigentlich ist das klar): ist ein Spezialfall der Bernoulli Verteilung. D.h. mit Reihenfolge mit Zurücklegen
+    \item Beweis, dass es eine Verteilung ist wird mittels der Normierung gemacht (Geometrische Reihe konvergiert gegen 1)
+\end{itemize}
+
+\subsection{Poisson-Verteilung}
+
+\begin{itemize}
+    \item Wieder ein unendlicher Raum, Idee: Intervalle sehr klein machen und dann fragen, ob dort ein Erfolg ist oder nicht (Erfolgschance muss auch gering sein)
+    \item $\lambda= \alpha \cdot t = n \cdot p$
+    \item $p_n = \frac{\lambda}{n}$ für kleine $p_n$ sehr gute Approximation
+    \item $\Rightarrow P_\lambda (k) = e^{-k} \cdot \frac{\lambda^k}{k!}$
+    \item Für kleine p und große n sehr nah an der Binominal Verteilung, dafür aber deutlich schneller berechenbar!
+\end{itemize}
+
+\subsection{Gauß-Verteilung}
+
+\begin{itemize}
+    \item Normalverteilung, aber hier nicht relevant
+    \item Siehe Erwartungswert + Varianz
+\end{itemize}
+
+\end{document}

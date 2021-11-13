@@ -1,0 +1,115 @@
+\documentclass[a4paper,11pt]{scrartcl}
+\usepackage[a4paper, left=2cm, right=2cm, top=2cm, bottom=3cm]{geometry} % kleinere Ränder
+
+% Umlaute in der Datei erlauben, auf Deutsch umstellen
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+% Mathesymbole und Ähnliches
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{microtype}
+\usepackage{stmaryrd}
+
+% Abbildungen
+\usepackage{tikz}
+\usetikzlibrary{arrows,calc}
+
+% Bessere Kontrolle über floats
+\usepackage{float}
+
+% Aufzählungen anpassen (alternativ: \arabic, \alph)
+%\renewcommand{\labelenumi}{(\roman{enumi})}
+
+
+\begin{document}
+
+% Kopfzeile (nur Nummer der Übung und Namen/MatrNr. müssen verändert werden)
+{\raggedright
+\begin{tabular}{l}
+    Stocha Recap \\
+    SS 2021 \\
+    \today{}
+\end{tabular}}
+\hfill
+{\Large Kapitel 6: EW + Var}
+\hfill
+\begin{tabular}{r}
+    Spartak Ehrlich \\
+    Stocha ist doof
+\end{tabular}
+\hrule
+
+\section{Grundlagen}
+\begin{itemize}
+    \item Erwartungswert misst den mittleren Wert einer Zufallsvariable X
+    \item Varianz misst wie stark die Werte von X typischerweise vom Erwartungswert abweichen
+    \item Nicht jede reellwertige ZV X besitzt einen Erwartungswert und eine Varianz (manche haben unendlich als Erwartungswert)
+\end{itemize}
+
+\section{Erwartungswert}
+\subsection{Diskrete ZVs}
+\textbf{Definition: Erwartungswert}
+Sei $(\Omega,\mathcal{A},P)$ ein W-Raum, $X :\Omega \mapsto \mathbb{R}$ eine diskrete ZV
+
+\begin{itemize}
+    \item Dann besitzt \textbf{X einen Erwartungswert} wenn $ \sum_{x \in X[\Omega]} |x| P(X=x) < \infty$
+    \item In diesem Fall ist nach dem Umordnungsatz: $E(X) = E_p(X) := \sum_{x \in X[\Omega]} |x| P(X=x)$ wohldefiniert und heißt der \textbf{Erwartungswert von X bzgl. P}
+    \item $\mathfrak{L}^1 (P) := \{X:\Omega \mapsto \mathbb{R} | E_p (|X|) <\infty\} = \mathfrak{L}^1$ bezeichnet die \textbf{Menge aller ZVs X für die ein Erwartungswert bzgl. P existiert}
+\end{itemize}
+
+\textbf{\\Satz: Rechenregeln für Erwartungswerte}
+Für diskrete ZVs X,Y,$X_n,Y_n: \Omega \rightarrow \mathbb{R}$ in $\mathfrak{L}^1$ gilt:
+\begin{enumerate}
+    \item \textbf{Monotonie:} Aus $X \leq Y$, d.h. $X(\omega) \leq Y(\Omega) \forall \omega \in \Omega$ folgt $E_p(X) \leq E_p(Y)$
+    \item \textbf{Linearität:} $\mathfrak{L}^1 (P)$ ist ein reeller Vektorraum und $E_p: \mathfrak{L}^1 \rightarrow \mathbb{R}$ ist \textbf{linear}: $E_p(c_1 \cdot X_1 + c_2 \cdot X_2) = c_1 \cdot E_p(X_1) + c_2 \cdot E_p(X_2)$ für $c_1,c_2 \in \mathbb{R}$
+    \item \textbf{$\sigma-$additivität:} Sind alle $X_n \geq 0$ und ist $X = \sum_{n \geq 1} X_n$ so gilt: $E_p(X) = \sum_{n \geq 1} E_p(X_n)$
+    \item \textbf{Monotone Konvergenz:} Wenn $Y_n$ gegen Y und $n$ gegen $\infty$ so folgt: $E_p(Y) = \lim_{n \rightarrow \infty} E_p(Y_n)$
+    \item \textbf{Produktregel:} Sind X,Y unabhängig so ist $X \cdot Y \in \mathfrak{L}^1(P)$ und es gilt: $E_p(X \cdot Y) = E_p(X) \cdot E_p(Y)$
+\end{enumerate}
+
+\textbf{\\Beweis: Rechenregeln für Erwartungswerte}
+\begin{enumerate}
+    \item \textbf{Monotonie:} $E_P(X) = \sum_{x \in X[\Omega]} x \cdot P(X=x) = \sum_{x \in X[\Omega], y \in Y[\Omega]} x \cdot P(X=x, Y=y) \leq \sum_{x \in X[\Omega], y \in Y[\Omega]} y \cdot P(X=x, Y=y) = \sum_{y \in X[\Omega]} y \cdot P(Y=y) = E_P(Y)$ 
+    \item \textbf{Linearität 1:} $E_P(c \cdot X_1) = \sum_{x \in [\Omega]} c \cdot x \cdot P(cX=cx) = \sum_{x \in [\Omega]} c \cdot x \cdot P(X=x) = c \cdot \sum_{x \in [\Omega]}  x \cdot P(X=x) = c \cdot E_P(X)$ Außerdem $cX \in \mathcal{L}^1$
+    \item \textbf{Linearität 2:} ???
+\end{enumerate}
+
+\subsection{Reelle ZVs}
+\textbf{Definition: Erwartungswert}
+\textit{gleicher Shit nur einmal approximiert und eimal mit Integral; Keine Aufgabe will das, also lasse ich es raus}
+
+\section{Varianz und Kovarianz}
+
+\textbf{Definition: Varianz und Kovarianz}
+Für X,Y $\in \mathfrak{L}^2(P)$ heißt:
+\begin{itemize}
+    \item $V(X) = V_p(X) := E_p([X-E_p(X)]^2) = E_p(X^2) - E_p(X)^2$ die Varianz von X bzgl P
+    \item $\sqrt{V(X)}$ die Standardabweichung von X bzgl. P
+    \item $Cov_P(X,Y) := E_p([X-E_p(X)] \cdot [Y-E_p(Y)]) = E_p(XY) - E_p(X)E_p(Y)$ die Kovarianz von X und Y bzgl. P
+    \item Ist $Cov_P(X,Y) = 0$ so ist X und Y unkorreliert
+    \item Bei einer Gleichverteilung ist die Varianz gerade die mittlere quadratische Abweichung vom Mittelpunkt
+    \item Korrelation: $p(X,Y) := \frac{Cov(X,Y)}{\sqrt{V(X)V(Y)}}$ (-1 bis 1)
+\end{itemize}
+
+\textbf{\\Satz: Rechenregeln für Varianz und Kovarianz}
+Seien X,Y,$X_i \in \mathfrak{L}^2(P)$ und $a,b,c,d \in \mathbb{R}$ Dann gilt:
+\begin{enumerate}
+    \item $aX +b, cY+d$ liegen in $\mathfrak{L}^2(P)$ und $Cov_P(aX+b,cY+d) = ac \cdot Cov_P(X,Y)$. 
+    Insbesondere gilt: $V_P(aX+b) = a^2V_P(X)$
+    \item $Cov_P(X,Y)^2 \leq V_P(X)V_P(Y)$ Cauchy Schwarz Ungleichung
+    \item To do
+    \item Sind X und Y unabhängig, so sind X und Y auch unkorreliert (Umkehrung muss nicht gelten!)
+\end{enumerate}
+
+\textbf{\\Beweis: Rechenregeln für Varianz und Kovarianz}
+\begin{enumerate}
+    \item $Cov_P(aX+b,cY+d) = E_P([aX+b] \cdot [cY+d]) - E_P(aX+b) \cdot E_P(cY+d) =a \cdot c E_P(XY) + a \cdot d E_P(X) + b \cdot c E_P(Y) + bd -(a \cdot E_P(X) + b) \cdot (c \cdot E_P(Y) +d) = a \cdot c Cov_P(X,Y)$
+    \item $V_p(aX+b) = E([aX+b -E(aX+b)]^2) = E([aX+b -a \cdot E(X)+b]^2) = E([a \cdot (X-E(X))]^2) = a^2 \cdot V(X)$
+    \item Cauchy Schwarz Gleichung ist viel zu schwer zum beweisen
+    \item Viel Index geshifte, siehe Lösung
+    \item Produktregel von Erwartungswerten + zweite Def. von CoVarianz nutzen!
+\end{enumerate}
+
+\end{document}

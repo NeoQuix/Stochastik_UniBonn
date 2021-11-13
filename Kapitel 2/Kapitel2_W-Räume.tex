@@ -1,0 +1,149 @@
+\documentclass[a4paper,11pt]{scrartcl}
+\usepackage[a4paper, left=2cm, right=2cm, top=2cm, bottom=3cm]{geometry} % kleinere Ränder
+
+% Umlaute in der Datei erlauben, auf Deutsch umstellen
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+% Mathesymbole und Ähnliches
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{microtype}
+\usepackage{stmaryrd}
+
+% Abbildungen
+\usepackage{tikz}
+\usetikzlibrary{arrows,calc}
+
+% Bessere Kontrolle über floats
+\usepackage{float}
+
+% Aufzählungen anpassen (alternativ: \arabic, \alph)
+%\renewcommand{\labelenumi}{(\roman{enumi})}
+
+
+\begin{document}
+
+% Kopfzeile (nur Nummer der Übung und Namen/MatrNr. müssen verändert werden)
+{\raggedright
+\begin{tabular}{l}
+    Stocha Recap \\
+    SS 2021 \\
+    \today{}
+\end{tabular}}
+\hfill
+{\Large Kapitel 2: W-Räume}
+\hfill
+\begin{tabular}{r}
+    Spartak Ehrlich \\
+    Stocha ist doof
+\end{tabular}
+\hrule
+
+\section{Wichtige Begriffe}
+
+\begin{itemize}
+    \item $\Omega :=$ Ergebnisraum
+    \item $\mathcal{A} :=$ Ereignis-Algebra
+    \item $P :=$ W-Maß
+    \item $\omega \in \Omega :=$ Ergebnis (Element von Omega)
+    \item $A \in \mathcal{A} :=$ Ereignis (Teilmenge von Omega; diskreter Fall)
+    \item $(\Omega,\mathcal{A})$ heißt Ereignisraum/Messraum
+    \item $(\Omega,\mathcal{A},P)$ heißt W-Raum
+\end{itemize}
+
+\section{$\sigma-$Algebren}
+
+\textbf{Definition $\sigma-$Algebra:}
+\begin{enumerate}
+    \item Das sichere Ereignis gehört zu $\mathcal{A}: \Omega \in \mathcal{A}$
+    \item Das Gegenereignis eines Ereignisses aus $\mathcal{A}$ gehört wieder zu $\mathcal{A} :$ $A \in \mathcal{A} \Rightarrow A^c := \Omega \setminus A \in \mathcal{A}$
+    \item $\mathcal{A}$ ist unter abzählbarer unendlicher Vereinigungsbildung  abgeschlossen: $A_1,A_2 \dots \in \mathcal{A} \Rightarrow \bigcup_{i \geq 1} A_i \in \mathcal{A}$
+\end{enumerate}
+
+\textbf{Eigenschaften:}
+\begin{enumerate}
+    \item $\emptyset \in \mathcal{A}$
+    \item $A,B \in \mathcal{A} \Rightarrow A \cup B, A \cap B, A \setminus B \in \mathcal{A}$
+    \item $\mathcal{A}$ ist unter abzählbar unendlicher Durchschnittsbildung abgeschlossen
+\end{enumerate}
+
+\textbf{Beweis der Eigenschaften:}
+\begin{enumerate}
+    \item Folgt aus (1) + (2): Gegenereignis von Omega
+    \item Folgt aus (2) + (3) + DeMorgan Regeln: $A \cup B \cup \emptyset \dots \in \mathcal{A}$, $ A \cap B = (A^c \cup B^c)^c \in \mathcal{A}$, $A \setminus B = A \cap B^c \in \mathcal{A}$
+\end{enumerate}
+
+\subsection{System aller $\sigma-$Algebren}
+
+\textbf{Definition: System aller $\sigma$-Algebren: $\sum (\Omega) := \{\mathcal{A} | \mathcal{A}$ ist eine $\sigma$-Algebra über $\Omega$\}} \\
+
+\textbf{Eigenschaften:}
+\begin{enumerate}
+    \item $\sum (\Omega)$ ist bezüglich Mengeninklusion halbgeordnet (Äquivalenzrelation auf den Elementen)
+    \item $\{\emptyset,\Omega\}$ ist die kleinste Sigma Algebra über $\Omega$
+    \item $2^\Omega$ ist die größte Sigma Algebra über $\Omega$
+    \item Der Schnitt beliebig vieler Sigma Algebren ist auch wieder eine Sigma Algebra
+    \item zu jedem System $\mathcal{G}$ von Teilmengen von $\Omega$ gibt es eine kleinste $\mathcal{G}$ enthaltene Sigma Algebra. Diese von $\mathcal{G}$ erzeugte Sigma Algebra ist der Schnitt aller G enthaltenden Sigma Algebren: $\sigma (\mathcal{G}) = \cap_{\mathcal{G} \subseteq \mathcal{A} \in \sum (\Omega)} \mathcal{A}$
+\end{enumerate}
+
+\textbf{Beweis der Eigenschaften:}
+\begin{enumerate}
+    \item ist bezüglich Mengeninklusion halbgeordnet, daraus folgt ist reflexiv, transitiv, antisymetrisch und somit Äquivalent
+    \item Jede Sigma Algebra besitzt $\emptyset$ und $\Omega$, und $\{\emptyset, \Omega\}$ ist eine Sigma Algebra
+    \item Potenzmenge ist die Menge aller Teilmengen
+    \item Ist $(A_i)_{i \in I}$ eine Familie von $\sigma$-Algebren über $\Omega$, so ist $\mathcal{A} := \cap_{i \in I} A_i$ wieder eine Sigma Algebra, da:
+    \begin{itemize}
+        \item $\Omega \in A_i \forall i \in I \Rightarrow \Omega \in \mathcal{A}$
+        \item Liegt A in $\mathcal{A}$ so liegt A auch in allen $A_i$, was wiederum heißt, dass $A^c \in A_i$ liegt, woraus folgt, dass auch $A^c \in \mathcal{A}$ liegt
+        \item Ist $A_1, A_2 \dots$ eine abzählbar unendliche Folge von Elementen in $A_i$ so liegt auch die Vereinigung aller Teile in jedem $A_i$ und folglich auch in $\mathcal{A}$
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Wozu macht man die Sigma Algebren und nimmt nicht die Potenzmenge?}
+
+\textbf{Borelsche Sigma Algebra:}
+\begin{itemize}
+    \item Der unendliche Fall! In diesem funktioniert die Potenzmenge nicht, weshalb man die Sigma Algebren benötigt (da diese nur Messbare Flächen darstellen)
+    \item Sei $\Omega = \mathfrak{R}^n$ und $\mathcal{G} := $ das System aller achsenparallelen kompakten Quader in $ \mathfrak{R}^n $ mit rationalen Endpunkten.
+    \item Dann ist $\mathfrak{B}^n := \sigma(\mathcal{G})$ die Borelsche Sigma Algebra und jedes $A \in \mathfrak{B}^n$ eine Borelmenge
+\end{itemize}
+
+\section{Wahrscheinlichkeitsmaß}
+\textbf{Definition Wahrscheinlichkeitsmaß:}
+
+$P : \mathcal{A} \rightarrow [0,1]$ ist ein W-Maß, wenn gilt:
+\begin{enumerate}
+    \item $P(\Omega) = 1$ Normierung (N)
+    \item $\sigma$-Additivität; Für paarweise disjunkte Ereignisse $A_1,A_2, \dots \in \mathcal{A}$ gilt:
+    $P(\sqcup_{i \geq 1} A_i) = \sum_{i \geq 1} P(A_i)$ (A)
+\end{enumerate}
+
+\textbf{Eigenschaften:}
+\begin{enumerate}
+    \item $P(\emptyset) = 0$
+    \item $P(A \cup B) + P(A \cap B) = P(A) + P(B)$
+    \item Monotonie: $A \subseteq B \Rightarrow P(A) \leq P(B)$
+    \item $\sigma$-Subadditivität: $P(\cup_{i \geq 1} A_i) \leq \sum_{i \geq 1} P(A_i)$
+    \item $\sigma$-Stetigkeit: Wenn $A_1 \subseteq A_2 \subseteq \cdots$ und A = $\cup_{i \geq 1} A_i$ dann gilt: $lim_{n \rightarrow \inf} P(A_n) = P(A)$
+\end{enumerate}
+
+\textbf{Beweis der Eigenschaften:} % Fehlt der Beweis der 5 (Sigma Stetigkeit!)
+\begin{enumerate}
+    \item Folgt aus (A): $P(\emptyset) = P(\emptyset \cup \emptyset \cup \dots) = \sum_{i \geq 1} P(\emptyset) \Rightarrow P(\emptyset) = 0$
+    \item Folgt aus (A) + (1): $P(A \sqcup B) = P(A \sqcup B \sqcup \emptyset \dots) = P(A) + P(B) + 0 +...$,
+    $P(A \cup B) + P(A \cap B) = P(A \setminus B) + P(B \setminus A) + 2P(A \cap B) = P(A) + P(B)$, $1 = P(\Omega) = P(A \sqcup A^c) = P(A) + P(A^c)$
+    \item folgt aus (A) + (2): $P(B) = P(B \sqcup (A \setminus B)) = P(B) + P(A \setminus B) \geq P(A)$
+    \item folgt aus (A): $P(\cup_{i \geq i} A_i) = P(\sqcup_{i \geq 1} (A_i \setminus \cup_{j < i} A_j)) = \sum_{i \geq 1}P(A_i \setminus \cap_{j < i} A_j) \leq \sum_{i \geq 1 } P(A_i)$
+\end{enumerate}
+
+\textbf{Zähldichte/W-Funktion:}
+\begin{enumerate}
+    \item Jedes W-Maß P auf ($\Omega,2^\Omega$) ist durch die Folge $(P(\{\omega\}))_{\omega \in \Omega}$ bereits eindeutig bestimmt, denn für $A \subseteq \Omega$ ist:
+    $P(A) = \sum_{\omega \in A} P(\{\omega\})$ (W-Funktion)
+\item Umgekehrt gibt jede Funktion $p: \Omega \rightarrow [0,1] $ mit $\sum_{\omega \in \Omega} p(\omega) = 1$ vermöge: $P(A) := \sum_{\omega \in \Omega} p(\omega)$ ein W-Maß sein (Zähldichte)
+\end{enumerate}
+Beweis via. den beiden Eigenschaften eines Wahrscheinlichkeitsmaßes!
+
+\end{document}

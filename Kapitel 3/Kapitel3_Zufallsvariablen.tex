@@ -1,0 +1,114 @@
+\documentclass[a4paper,11pt]{scrartcl}
+\usepackage[a4paper, left=2cm, right=2cm, top=2cm, bottom=3cm]{geometry} % kleinere Ränder
+
+% Umlaute in der Datei erlauben, auf Deutsch umstellen
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+% Mathesymbole und Ähnliches
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{microtype}
+\usepackage{stmaryrd}
+
+% Abbildungen
+\usepackage{tikz}
+\usetikzlibrary{arrows,calc}
+
+% Bessere Kontrolle über floats
+\usepackage{float}
+
+% Aufzählungen anpassen (alternativ: \arabic, \alph)
+%\renewcommand{\labelenumi}{(\roman{enumi})}
+
+
+\begin{document}
+
+% Kopfzeile (nur Nummer der Übung und Namen/MatrNr. müssen verändert werden)
+{\raggedright
+\begin{tabular}{l}
+    Stocha Recap \\
+    SS 2021 \\
+    \today{}
+\end{tabular}}
+\hfill
+{\Large Kapitel 3: Zufallsvariablen}
+\hfill
+\begin{tabular}{r}
+    Spartak Ehrlich \\
+    Stocha ist doof
+\end{tabular}
+\hrule
+
+\section{Grundlagen}
+
+\begin{itemize}
+    \item Zufallsvariablen sind eine Abbildung zwischen zwei Ereignisräumen
+    \item verlieren Informationen in der Abbildung (Vergröberung)
+    \item die W-Maß vom Bildbereich ist automatisch definiert durch das W-Maß des ersten Ereignisraumes! D.h. wir müssen uns keine Gedanken machen zu einem passenden W-Maß!
+\end{itemize}
+
+\section{Zufallsvariablen}
+
+\subsection{Defintion: Zufallsvariable}
+
+Seien $(\Omega,\mathcal{A})$ und $(\Omega^{\prime},\mathcal{A}^{\prime})$ Messräume.
+$X : \Omega \rightarrow \Omega^{\prime}$ heißt $(\mathcal{A},\mathcal{A}^{\prime})-$messbar oder Zufallsvariable wenn das X-Urbild von jedem Ereignis $A^{\prime} \in \mathcal{A}^{\prime}$ zu $\mathcal{A}$ gehört: $\forall A^{\prime} \in \mathcal{A}^{\prime}: X^{-1}[A^{\prime}] := \{\omega \in \Omega | X(\omega) \in A^{\prime}\} \in \mathcal{A}$
+
+\begin{enumerate}
+    \item man schreibt dann auch statt $X^{-1}[A^{\prime}]$ auch $\{X \in A^{\prime}\}$
+    \item In Deutsch: X ist eine ZV wenn jedes Ereignis aus dem zweiten Messraum durch ein Ereignis aus dem ersten Messraum definiert ist (also von diesem abgebildet wird; was für jede diskrete ZV gilt!)
+    \item Sparversion der Messbarkeitsbedingung: Wird die $\sigma-$Algebra $\mathcal{A}^{\prime}$ durch $\mathcal{G}^{\prime}$ erzeugt, so ist X eine ZV wenn gilt: $\forall A^{\prime} \in \mathcal{G}^{\prime} : X^{-1}[A^{\prime}] \in \mathcal{A}$
+    \item Sparvariante ist eine kleinere(!) Version als die normale.
+    D.h. einfach eine Menge definieren, die die normale Variante erfüllt und $\mathcal{G^{\prime}}$ schon enthält!
+    \item Wichtig auch: Es ist nur eine Implikation! D.h. alle Ereignisse im abgebildeten Raum müssen getroffen werden. D.h. auch das nicht der gesamte Urbereich getroffen wird! (Also es wird nicht alles abgebildet, es ist nur surjektiv!)
+\end{enumerate}
+
+Was ist nun das W-Maß der Zufallsvariable?
+
+Einfach! Es ist definiert durch das Bildmaß der Abbildung!\\
+
+\textbf{Satz: Bildmaß}
+
+Es sei $X: (\Omega,\mathcal{A}) \rightarrow (\Omega^{\prime},\mathcal{A}^{\prime})$ ZV und P ein W-Maß auf $(\Omega,\mathcal{A})$. Dann gilt durch:
+\begin{itemize}
+    \item $P^{\prime}(A^{\prime}) := P(X^{-1}[A^{\prime}]) = P(\{X \in A^{\prime} \}) =: P(X \in A^{\prime})$ für $A^{\prime} \in \mathcal{A}^{\prime}$ ein W-Maß $P^{\prime}$ für den zweiten Messraum definiert und dieses heißt \textbf{Bildmaß zu P bzgl. X}
+    \item Das Bildmaß P bzgl. X wird auch als die Verteilung von X genannt und mit $P_{X}$ oder $P \circ X^{-1}$ bezeichnet
+\end{itemize}
+
+\textbf{Beweis vom Satz:}
+Via. den beiden Eigenschaften des W-Maßes (Relativ leicht)\\
+
+\subsection{Identisch verteilte Verteilungen:}
+Sei $((\Omega_i,\mathcal{A}_i, P_i))_{i \in I}$ eine Familie von W-Räumen sowie $(X_i)_{i \in I}$ eine Famile von ZVs, die alle in denselben Messraum abbilden: $X_i: (\Omega_i,\mathcal{A}_i) \mapsto (\Omega, \mathcal{A})$, dann heißt die Familie identisch verteilt, wenn alle Verteilungen übereinstimmen.
+
+z.B. unendlicher Münzwurf, wobei jede ZV auf den i-ten Wurf abbildet \\
+
+\textbf{Satz: Gemeinsame Verteilung}
+
+\begin{itemize}
+    \item Hat man \textbf{Ereignisse die von mehreren ZVs abhängen} so reicht die Infos der einzelnen Verteilungen \textbf{NICHT} mehr aus. 
+    Man benötigt das Konzept der gemeinsamen Verteilung.
+    \item Es sei $(\Omega, \mathcal{A}, P)$ ein W-Raum und $X_1, \dots, X_n$ ZVs $X_i: (\Omega, \mathcal{A}) \mapsto (\Omega_i,\mathcal{A}_i)$
+    \item Die Produktabbildung $X := X_1 \oplus \dots \oplus X_n: \Omega \rightarrow \Omega_1 \times \dots \times \Omega_n$ definiert durch:
+    \item $X(\omega) := (X_1(\omega),\dots,X_n(\omega))$ 
+    \item ist eine ZV $X: (\Omega,\mathcal{A}) \mapsto (\Omega_1 \times \dots \times \Omega_n, \mathcal{A}_1 \bigotimes \dots \bigotimes  \mathcal{A}_n)$ deren Verteilung die gemeinsame Verteilung genannt wird.
+    \item Hier ist dann die Produktabbildung $\bigotimes^n_{i = 1} A_i$ die kleinste Sigma Algebra
+\end{itemize}
+
+\textbf{Beweis: Messbarkeit der Produktabbildung}
+ist Messbar aufgrund der Eigenschaften der Messbarkeit der einzelnen Räume + der Sparversion der Messbarkeit.\\
+
+\textbf{In Deutsch:} 
+Ereignisse die von mehreren ZVs abhängen können nicht leicht bestimmt werden. 
+Diese hängen von der W-Maßen aller beteiligen ZVs ab. 
+Theorie ist ein bisschen schwerer hier, aber die Praxis nicht. 
+Umgesetzt wird das ganze mittels Tabellen, wo jeder Zustand der ZVs an den Spalten/Zeilen vorkommt und in den Feldern die gemeinsame Verteilung steht.\\
+
+\textbf{Randverteilung:}
+Hat man die gemeinsame Verteilung, so kann man durch das Summieren der unnötigen ZVs die Randverteilung (also von einer ZV) bestimmen.
+Dies wird dann auch die Marginalisierung genannt.\\
+
+
+\end{document}

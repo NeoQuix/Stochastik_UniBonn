@@ -1,0 +1,136 @@
+\documentclass[a4paper,11pt]{scrartcl}
+\usepackage[a4paper, left=2cm, right=2cm, top=2cm, bottom=3cm]{geometry} % kleinere Ränder
+
+% Umlaute in der Datei erlauben, auf Deutsch umstellen
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+% Mathesymbole und Ähnliches
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{microtype}
+\usepackage{stmaryrd}
+
+% Abbildungen
+\usepackage{tikz}
+\usetikzlibrary{arrows,calc}
+
+% Bessere Kontrolle über floats
+\usepackage{float}
+
+% Aufzählungen anpassen (alternativ: \arabic, \alph)
+%\renewcommand{\labelenumi}{(\roman{enumi})}
+
+
+\begin{document}
+
+% Kopfzeile (nur Nummer der Übung und Namen/MatrNr. müssen verändert werden)
+{\raggedright
+\begin{tabular}{l}
+    Stocha Recap \\
+    SS 2021 \\
+    \today{}
+\end{tabular}}
+\hfill
+{\Large Kapitel 9: Steilkurs Statistik}
+\hfill
+\begin{tabular}{r}
+    Spartak Ehrlich \\
+    Stocha ist doof
+\end{tabular}
+\hrule
+
+\section{Grundlagen}
+\begin{itemize}
+    \item Gehen andersherum an Zufallsexperimente an. D.h. wissen nichts über W-Maße, ermitteln diese empirisch (meistens wissen wir die Verteilung aber nicht P)
+    \item z.B. $N$ Orangen, davon $f$ faule, und $g = N-f$ gute. $N$ bekannt, $f$ und $g$ nicht. Wie soll der Empfänger $n$ Stichproben schätzen?
+    \item z.B. Werfen einer Reißzwecke (Oben oder Unten). Wie kann man $p$ nach $n$-maligem Werfen abschätzen?
+    \item $\Rightarrow$ Hauptaufgabe ist:
+    \begin{itemize}
+        \item Parameterschätzung: W-Maß schätzen
+        \item Konfidenzbereiche: Man schätzt nicht W sondern ein Intervall, wo die Parameter höchst wahrscheinlich liegen
+        \item Testen von Hypothesen: Hier geht es um statistische Entscheidungsverfahren (z.B. Soll die Orangenlieferung akzeptiert werden oder nicht?)
+    \end{itemize}
+\end{itemize}
+
+\section{Statistisches Modell}
+\subsection{Definition: Statistisches Modell}
+Ein statistisches Modell ist ein Tripel $\mathcal{M} =(\mathcal{X},\mathcal{A}, (P_\theta)_{\theta \in \Theta })$ bestehend aus:
+
+    
+\begin{itemize}
+    \item einem Stichprobenraum $\mathcal{X}$
+    \item einer $\sigma-$Algebra $\mathcal{A}$ auf $\mathcal{X}$ und
+    \item einer Familie $(P_\theta)_{\theta \in \Theta }$ von W-Maßen auf $(\mathcal{X,A}), |\Theta| \geq 2$
+\end{itemize}
+Statt $\Omega$ nutzen wir $\mathcal{X}$ als Stichprobenraum, da $\Omega$ die detaillierte Beschreibung und $\mathcal{X}$ die tatsächliche Beobachtung ist.
+Außerdem schreiben wir $E_\theta$ statt $E_{P\theta}$ und $V_\theta$ statt $V_{P\theta}$
+
+\subsection{Modellklassen}
+Sei $\mathcal{M} =(\mathcal{X},\mathcal{A}, (P_\theta)_{\theta \in \Theta })$ ein statistisches Modell
+
+\begin{itemize}
+    \item Ist $\Theta \subset \mathbb{R}^d$ für ein $ d \in \mathbb{N}$ so heißt das statische Modell, parametrisches Modell (für $d=1$ ein einparametrisches Modell)
+    \item $\mathcal{M}$ heißt ein diskretes Modell, wenn $\mathcal{X}$ diskret ist, d.h. $|\mathcal{X}| \leq |\mathbb{N}|$ und $\mathcal{A} = 2^\mathcal{X}$ ist.
+    Dann ist jedes $P_\theta$ durch die W-Funktion: $p_\theta: x \mapsto p_\theta(x) := P_\theta(\{x\})$
+    \item M heißt ein stetiges Modell, wenn $\mathcal{X}$ eine Borel-Teilmenge von $\mathbb{R}^n$ ist, $\mathcal{A} = B_\mathcal{X}^n$, die auf $\mathcal{X}$ eingeschränkte Borel-$\sigma$-Algebra von $\mathbb{R}^n$ und jedes $P_\theta$ eine Dichtefunktion $p_\theta$ besitzt
+    \item Ist $\mathcal{M}$ diskret oder stetig, so sprechen wir von $\mathcal{M}$ als ein Standardmodell
+\end{itemize}
+
+\subsection{Produktmodelle}
+Oft werden statistische Modelle betrachtet, die die unabhängige Wiederholung von identischen Einzelexperimenten beschreiben.
+Das führt zu folgender Definition
+
+\textbf{\\Definition}
+Ist $(E,\mathcal{E},(Q_\theta)_{\theta \in \Theta})$ ein statistisches Modell und $ n \geq 2$ so heißt: 
+\begin{itemize}
+    \item $(\mathcal{X},\mathcal{A}, (P_\theta)_{\theta \in \Theta }) := (E^n,\mathcal{E}^{\otimes n},(Q_\theta^{\otimes n})_{\theta \in \Theta})$ das dazugehörige \textbf{$n$-fache Produktmodell}
+    \item In dem Fall bezeichne $X_i: \mathcal{X} \rightarrow E$ die Projektion auf die i-te Koordinate. Diese Projektion beschreibt den Ausgang des i-ten Teilexperiments. Die $X_1, \dots, X_n$ sind dann bzgl. jedes $P_\theta = Q_\theta^{\otimes n}$ unabhängig und identisch verteilt mit Verteilung $Q_\theta$
+\end{itemize}
+
+\subsection{Statistiken und Schätzer}
+Es sei $(\mathcal{X},\mathcal{A}, (P_\theta)_{\theta \in \Theta })$ ein statistisches Modell und $(\Sigma, \mathcal{S})$ ein Messraum.
+\begin{itemize}
+    \item Eine beliebige ZV S:$(\mathcal{X},\mathcal{A}) \rightarrow (\Sigma, \mathcal{S})$ heißt eine Statistik 
+    \item Sei $\tau:  \Theta \mapsto \Sigma$ eine Abbildung, die jedem $\theta \in \Theta$ eine Kenngröße $\tau(\theta) \in \Sigma$ zuordnet.
+    Eine Statistik T:$\mathcal{X} \rightarrow \Sigma$ heißt dann ein Schätzer für $\tau$ (Oft ist $\tau = id_\Theta$; T heißt dann auch Schätzer für $\theta$)
+\end{itemize}
+Bemerkung: Neue Namensgebung Statistik statt ZVs, Schätzer statt Statistik wegen neuer Interpretationen: 
+\begin{itemize}
+    \item \textbf{ZVs}: beschreibt unvorhersehbare Ergebnisse
+    \item \textbf{Statistik}: ist eine vom Statistiker wohlkonstruierte Abbildung, die aus den Beobachtungsdaten Essentielles extrahiert.
+    \item Statistiken gibt es viele, ein \textbf{Schätzer} ist zugeschnitten auf das Schätzen von $\tau$
+\end{itemize}
+
+\subsection{Maximum Likelihood Schätzer}
+Es sei $(\mathcal{X},\mathcal{A}, (P_\theta)_{\theta \in \Theta })$ ein statistisches \textbf{Standardmodell}; dann ist jedes $P_\theta$ durch eine W-Funktion oder Dichte $p_\theta$ gekennzeichnet.
+
+\begin{itemize}
+    \item \textbf{Idee:} Wird $x \in \mathcal{X}$ beobachtet, so bestimme den Schätzwert $T(x) \in \Theta$ so, dass:
+    \item $p_{T(x)}(x) = max_{\theta \in \Theta}p_\theta (x)$
+    \item Bemerkung: Da im stetigen Modell $P_\theta(\{x\})$ typischerweise gleich Null ist, sind wir zu Dichten übergegangen.
+\end{itemize}
+
+\textbf{\\Definition:}
+Die Funktion $p :\mathcal{X} \times \Theta \rightarrow [0,\infty)$ mit
+\begin{itemize}
+    \item $p(x,\theta) := p_\theta(x)$ heißt die zugehörige \textbf{Likelihood-Funktion}
+    \item $p(x, \dot): \Theta \rightarrow [0,\infty)$ heißt die \textbf{Likelihood-Funktion zum Beobachtungswert} $x \in \mathcal{X}$
+\end{itemize}
+
+\textbf{\\Definition:}
+Ein Schätzer $T: \mathcal{X} \rightarrow \Theta$ für $\theta$ heißt \textbf{Maximum-Likelihood-Schätzer}, kurz MLE, wenn für jedes $x \in \mathcal{X}$ stets $T(x)$ eine Maximalstelle von $p(x, \dot)$ ist,d.h: 
+\begin{itemize}
+    \item $p(x,T(x)) = max_{\theta \in \Theta}p_\theta (x)$
+    \item \textbf{Bemerkung:} Zur MLE-Bestimmung ist es oft bequem mit dem \textbf{Log MLE} zuarbeiten $log p(x, \dot)$, da wegen der Monotonie der Log Funktion diese dieselben Maximalstellen besitzt.
+\end{itemize}
+
+\section{Bonus (glaube Def. ist falsch)}
+\textbf{Def. Erwartungstreu + Konsistent}
+\begin{itemize}
+    \item \textbf{Erwartungstreu:} Falls der Schätzer den Erwartungswert Theta hat. D.h. $E_\theta(T) = \theta$
+    \item \textbf{Konsistenz:} Wenn der Schätzer Erwartungstreu ist und zusätzlich die Varianz von T für n gegen unendlich gegen 0 geht: $Var_\theta(T) \rightarrow^{n \rightarrow \infty} 0$
+\end{itemize}
+
+\end{document}

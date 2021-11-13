@@ -1,0 +1,85 @@
+\documentclass[a4paper,11pt]{scrartcl}
+\usepackage[a4paper, left=2cm, right=2cm, top=2cm, bottom=3cm]{geometry} % kleinere Ränder
+
+% Umlaute in der Datei erlauben, auf Deutsch umstellen
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+% Mathesymbole und Ähnliches
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{microtype}
+\usepackage{stmaryrd}
+
+% Abbildungen
+\usepackage{tikz}
+\usetikzlibrary{arrows,calc}
+
+% Bessere Kontrolle über floats
+\usepackage{float}
+
+% Aufzählungen anpassen (alternativ: \arabic, \alph)
+%\renewcommand{\labelenumi}{(\roman{enumi})}
+
+
+\begin{document}
+
+% Kopfzeile (nur Nummer der Übung und Namen/MatrNr. müssen verändert werden)
+{\raggedright
+\begin{tabular}{l}
+    Stocha Recap \\
+    SS 2021 \\
+    \today{}
+\end{tabular}}
+\hfill
+{\Large Kapitel 8: Markov-Ketten}
+\hfill
+\begin{tabular}{r}
+    Spartak Ehrlich \\
+    Stocha ist doof
+\end{tabular}
+\hrule
+
+\section{Grundlagen}
+\begin{itemize}
+    \item geht um ZVs die eine einfache Form von stochastischer Abhängigkeit haben
+    \item und zwar ist die Zufallsvariable $n+1$ nur abhängig von der ZV $n$
+    \item bei diesen ZVs interessieren wir uns für das Langzeitkonvergenzverhalten (Markov-Ketten)
+\end{itemize}
+
+\section{Stochastische Matrizen und Markov-Ketten}
+\subsection{Definition: Stochastische Matrizen}
+Sei $ V \neq \emptyset$ und $ \prod = (\prod (x,y))_{x,y \in V}$ eine reellwertige Matrix.
+
+\begin{itemize}
+    \item $\prod$ heißt zeilenstochastisch, wenn in jeder Zeile der Matrix $\prod$ eine W-Funktion auf V steht. Das heißt:
+    \begin{itemize}
+        \item alle Einträge von $\prod$ liegen im Intervall $[0:1]: \prod \in [0:1]^{V \times V}$
+        \item für alle $x \in V$ ist $\sum_{y \in V} \prod (x,y) = 1$
+    \end{itemize}
+\item Wir betrachten den Zufallsprozess in V bei der jedem Schritt die Wahrscheinlichkeit $\prod (x,y)$ vom Zustand $x$ zum Zustand $y$ springt. Symbolisch mit: $x \stackrel{\prod (x,y)}{\rightarrow} y$
+\end{itemize}
+
+\subsection{Definition: Markov Kette}
+\begin{itemize}
+    \item Eine Folge von $X_0,X_1,\dots$ von ZVs auf dem W-Raum $(\Omega,\mathcal{A},P)$ mit Werten in V, d.h. $X_i :(\Omega,\mathcal{A}) \rightarrow (V,2^V)$ heißt \textbf{Markov-Kette mit Zustandsraum V und Übergangmatrix} $\prod$, wenn für alle $n \geq 0$ und für alle $x_0,\dots,x_{n+1} \in V$ folgende Markov Eigenschaft gilt:
+        $P(X_{n+1} = x_{n+1}| X_0 = x_0, \dots, X_n = x_n) = P(X_{n+1} = x_{n+1}| X_n =x_n)$ sofern $P(X_0 = x_0, \dots, X_n = x_n) >0$ ist.
+    \item Die Verteilung $\alpha := P \circ X^{-1}_0$ von $X_0$ heißt \textbf{Startverteilung der Markov-Kette}
+\end{itemize}
+
+\subsection{Satz: Matrixpotenzen}
+Die n-te Potenz $\prod^n$ der zeilenstochastischen Matrix $\prod$ enthält an der Position $(x,y)$ die Wahrscheinlichkeit, in genau n Schritten vom Zustand x in den Zustand y zu gelangen:
+\begin{itemize}
+    \item $P^x(X_n=y)= \prod^n (x,y)$
+\end{itemize}
+
+\subsection{Ergodensatz:}
+Es sei $\prod = \pi_{i,j} \in [0:1]^{n \times n}$ zeilenstochastisch. Ferner gebe es ein $L \geq 1 $, sodass alle Einträge in $\prod^L$ positiv sind. Dann gibt es eine W-Funktion $p = (p_1,\dots,p_N)$ die sog. Grenzverteilung mit folgenden Eigenschaften:
+\begin{itemize}
+    \item $\lim_{m \rightarrow \infty} \prod^m =: \prod^\infty$ existiert und in jeder Zeile von $\prod^\infty$ steht die Grenzverteilung.
+    \item Die Matrixfolge $(\prod^m)_{m\geq 1}$ konvergiert exponentiell schnell gegen $\prod^\infty$
+    \item Die Grenzverteilung $p$ ist die eindeutig bestimme W-Funktion mit $p \prod = p$
+\end{itemize}
+
+\end{document}

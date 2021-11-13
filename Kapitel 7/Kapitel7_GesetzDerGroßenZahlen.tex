@@ -1,0 +1,124 @@
+\documentclass[a4paper,11pt]{scrartcl}
+\usepackage[a4paper, left=2cm, right=2cm, top=2cm, bottom=3cm]{geometry} % kleinere Ränder
+
+% Umlaute in der Datei erlauben, auf Deutsch umstellen
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+% Mathesymbole und Ähnliches
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{microtype}
+\usepackage{stmaryrd}
+
+% Abbildungen
+\usepackage{tikz}
+\usetikzlibrary{arrows,calc}
+
+% Bessere Kontrolle über floats
+\usepackage{float}
+
+% Aufzählungen anpassen (alternativ: \arabic, \alph)
+%\renewcommand{\labelenumi}{(\roman{enumi})}
+
+
+\begin{document}
+
+% Kopfzeile (nur Nummer der Übung und Namen/MatrNr. müssen verändert werden)
+{\raggedright
+\begin{tabular}{l}
+    Stocha Recap \\
+    SS 2021 \\
+    \today{}
+\end{tabular}}
+\hfill
+{\Large Kapitel 7: Ges. der großen Zahlen} 
+\hfill
+\begin{tabular}{r}
+    Spartak Ehrlich \\
+    Stocha ist doof
+\end{tabular}
+\hrule
+
+\section{Grundlagen}
+
+\begin{itemize}
+    \item stellt relative Häufigkeit mit Erwartungswert mathematisch in Verbindung
+    \item empirisch die Vermutung das mit hohem n die relative Häufigkeit gegen den Erwartungswert geht
+\end{itemize}
+
+\section{Stochastische Konvergenz + Schwaches Gesetz der großen Zahlen}
+\subsection{Definition: Stochastische Konvergenz}
+Es sei $(\Omega, \mathcal{A},P)$ ein W-Raum, $Y,Y_1,Y_2\dots$ ZVs $\Omega \rightarrow \mathbb{R}$.
+
+\begin{itemize}
+    \item         
+    Die Folge $(Y_n)_n$ heißt stochastisch konvergent gegen $Y$, kurz: $Y_n \stackrel{P}{\rightarrow} Y$ wenn für alle $\epsilon > 0$ gilt: $\lim_{n \rightarrow \infty} P(|(Y_n - Y)| < \epsilon) = 1$, wobei $Y_n := \frac{1}{n} \sum_{i \geq 1}^n X_i$ ist und $Y := E_p(X_1)$
+\end{itemize}
+
+\subsection{Schwaches Gesetz der großen Zahlen}
+Es sei $(X_i)_{i \geq 1}$ eine Folge paarweise unkorrelierter ZVs mit beschränkten Varianzen (d.h. die existieren) für alle $i$.
+
+\begin{itemize}
+    \item 
+    Dann ist die Wahrscheinlichkeit, dass das arithmetische Mittel der ersten n zentralisierten ZVs mindestens um $\epsilon$ von Null abweicht, nach oben beschränkt durch $\frac{v}{(n\epsilon^2)}$:
+    \item
+    $P(|\frac{1}{n} \sum_{i=1}^n (X_i -E_p(X_i))| \geq \epsilon) \leq \frac{v}{n \epsilon^2} \stackrel{n \rightarrow \infty}{\rightarrow} 0$ ($v$ = Varianz)
+    \item Grob gesprochen: $\frac{1}{n} \sum_{i = 1}^n (X_i -E_p(X_i)) \stackrel{P}{\rightarrow} 0$
+    \item Sind alle Erwartungswerte $E_P(X_i)$ gleich, so folgt insbesondere:
+    $\frac{1}{n} \sum_{i = 1 }^n X_i \rightarrow^P E_P(X_1)$
+\end{itemize}
+
+\textbf{\\In Deutsch:}
+Die Wahrscheinlichkeit das die Folge von ZVs sich um epsilon um den Erwartungswert unterscheidet ist beschränkt durch die Tschebyscheff Ungleichung + geht für hohe n gegen Unendlich.
+(Schwaches Konvergenz Kriterium, da es immer noch möglich ist sich weiter von dem Erwartungswert zu entfernen)
+
+\subsection{Tschebyscheff-Ungleichung}
+Es sei $(\Omega, \mathcal{A}, P)$ ein W-Raum, $X \in \mathcal{L}^2(P), \epsilon > 0$ Dann gilt: 
+\begin{itemize}
+    \item $P(|X-E_P(X)| \geq \epsilon) \leq \frac{V_P(X)}{\epsilon^2}$
+\end{itemize}
+
+
+\textbf{\\In Deutsch:}
+Ist eine obere Grenze, dass sich die Wahrscheinlichkeit dass eine ZVs-den Erwartungswert um epsilon unterscheidet immer durch die Varianz durch epsilon quadrat nach oben beschränkt ist.
+(Sehr sinnvoll wenn man wissen will wie wahrscheinlich es ist, dass etwas um epsilon um den Erwartungswert abweicht)
+
+\section{Fast sichere Konvergenz + Großes Gesetz der Zahlen}
+\subsection{Fast sichere Konvergenz}
+Seien $Y,Y_1,Y_2 \dots$ reelle ZVs auf $(\Omega, \mathcal{A},P)$
+\begin{itemize}
+    \item
+    Die Folge $(Y_n)_{n\geq 1}$ konvergiert $P-$fast sicher gegen $Y$ wenn für die Menge $A := \{\omega \in \Omega: \lim_{n \rightarrow \infty} Y_n(\omega) = Y(\omega)\}$ aller Stellen $\omega \in \Omega$ an denen punktweise Konvergenz herrscht gilt: $P(A) = 1$
+\end{itemize}
+
+\textbf{\\In Deutsch:}
+Die Zufallsvariablen vom Ereignis konvergieren gegen dieses (werden immer kleiner).
+
+\subsection{Starkes Gesetz der großen Zahlen}
+Sei $(X_i)_{i \geq 1}$ eine Folge paarweise unkorrelierter ZVs in $\mathfrak{L}^2(P)$ mit beschränkten Varianzen
+\begin{itemize}
+    \item 
+    $\sup_{i \geq 1} V_p(X_i) \leq v \leq \infty$. Dann gilt: $\frac{1}{n} \sum_{i = 1}^n (X_i -E_p(X_i))  \rightarrow 0$ P-Fast sicher
+\end{itemize}
+
+\textbf{\\In Deutsch:}
+Relative Häufigkeit konvergiert gegen den Erwartungswert
+
+\section{Verteilungsfunktion der Gauß-Glocke + Zentraler Grenzwertsatz}
+\subsection{Verteilungsfunktion der Gauß-Glocke}
+\textbf{Definition:}
+Ist P ein W-Maß auf $(\mathbb{R},\mathcal{B})$, so heißt: 
+\begin{itemize}
+    \item $F_p:= (\mathbb{R} \ni c \mapsto P((-\infty,c])) \in [0,1]$ die Verteilungsfunktion zu P
+    \item Die Funktion $\phi (x) := \frac{1}{\sqrt{2 \pi}} e^{-x^2/2}$ ist die Dichtefunktion zur Standardnormalverteilung $\mathcal{N}_{0,1}$
+    \item Für $c \in \mathbb{R}$ setze $\Phi (c) := \mathcal{N}_{0,1}((-\infty,c]) = \int_{-\infty}^c \phi (x)dx$
+\end{itemize}
+
+\subsection{Zentraler Grenzwertsatz}
+Es sei $(X_i)_{i \geq 1}$ eine Folge unabhängiger, identisch verteilter reelwertiger ZVs im $\mathcal{L}^2 (P)$ mit $E_p(X_i) = m$ und $V_p(X_i)= v > 0$.
+Sei $S_n := X_1 + \dots + X_n$ die n-te Partaialsumme und $S_n^A = \frac{1}{\sqrt(n)} \sum_{i =1}^n \frac{X_i-m}{\sqrt(v)}$ die Standardisierung von $S_n$. 
+Bezeichne $F_n$ die Verteilungsfunktion von $S_n^A$ so konvergiert $F_n$ im Supremumsabstand gegen die Verteilungsfunktion $\Phi$ der Standardnormalverteilung: $\lim_{n \rightarrow \infty} d(F_n,\Phi) = 0$
+
+\end{document}

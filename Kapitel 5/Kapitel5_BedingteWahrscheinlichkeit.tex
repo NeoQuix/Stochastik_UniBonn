@@ -1,0 +1,158 @@
+\documentclass[a4paper,11pt]{scrartcl}
+\usepackage[a4paper, left=2cm, right=2cm, top=2cm, bottom=3cm]{geometry} % kleinere Ränder
+
+% Umlaute in der Datei erlauben, auf Deutsch umstellen
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+% Mathesymbole und Ähnliches
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{microtype}
+\usepackage{stmaryrd}
+
+% Abbildungen
+\usepackage{tikz}
+\usetikzlibrary{arrows,calc}
+
+% Bessere Kontrolle über floats
+\usepackage{float}
+
+% Aufzählungen anpassen (alternativ: \arabic, \alph)
+%\renewcommand{\labelenumi}{(\roman{enumi})}
+
+
+\begin{document}
+
+% Kopfzeile (nur Nummer der Übung und Namen/MatrNr. müssen verändert werden)
+{\raggedright
+\begin{tabular}{l}
+    Stocha Recap \\
+    SS 2021 \\
+    \today{}
+\end{tabular}}
+\hfill
+{\Large Kapitel 5: B. Wahrscheinlichkeiten}
+\hfill
+\begin{tabular}{r}
+    Spartak Ehrlich \\
+    Stocha ist doof
+\end{tabular}
+\hrule
+
+\section{Grundlagen }
+\begin{itemize}
+    \item Wenn ein Ereignis B eingetreten ist, dann soll dies zu einer Neubewertung aller Ereignisse A führen (neue W-Maß P, manche Ereignisse werden beeinflusst, andere nicht)
+    \item $\Rightarrow$ man braucht ein neues W-Maß $P_A$ was bestimmte Eigenschaften erfüllt.
+    \item Bsp: Urne mit roten und blauen Kugeln, wobei wir Kugeln nicht zurücklegen.
+    A := Erste Kugel ist blau, B := Zweite Kugel ist blau.
+    Wenn A eingetreten ist, sind weniger Kugeln in der Urne und B ist unwahrscheinlicher geworden, bzw. braucht eine neue Beurteilung.
+\end{itemize}
+
+\section{Neubewertung von Wahrscheinlichkeiten}
+
+\subsection{Anforderungen an das neue W-Maß $P_A$}
+
+\begin{enumerate}
+    \item $P_A(A) = 1$, da nun A ein sicheres Ereignis ist.
+    \item Die Neubewertung der Teilereignisse B von A ist proportional zur ursprünglichen Bewertung: $\exists c_A > 0 \forall B \in \mathcal{A}, B \subseteq A: P_A(B) = c_A P(B)$
+\end{enumerate}
+In Deutsch: Alle Ereignisse die von A abhängig sind werden um den gleichen Faktor c gestreckt. \\
+
+\textbf{Satz: Neubewertung von Ereignissen:}
+\begin{itemize}
+    \item Es sei $(\Omega, \mathcal{A}, P)$ ein W-Raum und $A \in \mathcal{A}$ mit $P(A) > 0$. Dann gibt es genau ein W-Maß $P_A$ auf $(\Omega, \mathcal{A})$ mit den Eigenschaften (1) + (2), nämlich:
+    \item $P_A(B) := \frac{P(A \cap B)}{P(A)}$ für $B \in \mathcal{A}$
+\end{itemize}
+
+\textbf{Definition: Bedingte Wahrscheinlichkeit}
+\begin{itemize}
+    \item $P(B|A) := \frac{P(A \cap B)}{P(A)}$ für $B \in \mathcal{A}$ ist die bedingte Wahrscheinlichkeit von B unter der Bedingung A bzgl. P
+\end{itemize}
+
+\textbf{Satz: W-Maß Bedingte Wahrscheinlichkeit}
+\begin{itemize}
+    \item Durch $ B \mapsto P(B|A)$ wird ein W-Maß $P_A$ auf $(\Omega, \mathcal{A})$ definiert
+\end{itemize}
+\textbf{Beweis}
+\begin{itemize}
+    \item (N): $P_A(\Omega) = \frac{P(\Omega \cap A)}{P(A)} = 1$
+    \item (A): Sei $B = \sqcup_{i \geq B_i}$ mit $B_i \in \mathcal{A}$. Dann gilt wegen (A) von P:
+    $P_A(B) = P_A(\sqcup_{i \geq 1} B_i) = \frac{P(A \cap \sqcup_{i \geq 1} B_i)}{P(A)} = \frac{P(\sqcup_{i \geq 1} A \cap B_i)}{P(A)} = \frac{\sum_{i \geq 1} P(A \cap B_i)}{P(A)} = \sum_{i \geq 1} P_A(B_i)$
+\end{itemize}
+
+
+\subsection{Fallunterscheidungsformel + Formel von Bayes}
+
+Es sei $(\Omega,\mathcal{A},P)$ ein W-Raum und $\Omega = \sqcup_{i\in I} B_i$ eine disjunkte Zerlegung von $\Omega$ in höchstens abzählbar unendlich viele Ereignisse $B_i \in \mathcal{A}$ mit $P(B_i) > 0$ Dann gilt: \\
+
+\textbf{Fallunterscheidungsformel: + Beweis}
+\begin{itemize}
+    \item Für alle $ A \in \mathcal{A}$ gilt:
+    $P(A) = \sum_{i \in I} P(B_i) \cdot P(A|B_i)$
+    \item folgt aus Def. Bedingte Wahrscheinlichkeit + Kürzen + $\sigma$-Additivität
+    \item in Deutsch: Hilft die Wahrscheinlichkeit von A zu bestimmen; Man muss nur die Wahrscheinlichkeiten für die anderen Ereignisse auf dem Weg drauf multiplizieren (dann natürlich auch die Bedingten)
+\end{itemize}
+
+\textbf{Formel von Bayes: + Beweis}
+\begin{itemize}
+    \item Für alle $ A \in \mathcal{A}$ mit $P(A) > 0$ und alle $k \in I$ gilt
+    $P(B_k|A) = \frac{P(B_k) \cdot P(A|B_k)}{\sum_{i \in I} P(B_i) \cdot P(A|B_i)}$
+    \item folgt aus (1) + Def. (P(B)) im Bruch ergänzen
+    \item in Deutsch: Hilft die Bedingung umzudrehen, und zwar in dem man die Wahrscheinlichkeit des Weges $B_k$ teilt durch die Gesamtwahrscheinlichkeit aller Wege (zu A natürlich)
+    \item Zum Merken: Wahrscheinlichkeit des Wegs über $B_k$ geteilt durch Gesamtwahrscheinlichkeit aller Wege
+\end{itemize}
+
+
+\section{Charakteristika mehrstufiger Experimente + Beispiel:}
+
+\textbf{Charakteristika}
+
+\begin{itemize}
+    \item Motivation: Mit bedingten Wahrscheinlichkeiten kann man mehrstufige Zufallsexperimente modellieren.
+    \item Charakteristika: meistens n nacheinander ausgeführte Teilexperimente; Gesamtexperiment wird durch W-Raum beschrieben. Teilexperimente mittels ZV (d.h. n Zufallsvariablen, erste wird aufgedeckt $\Rightarrow$ alle anderen von der erste Abhängig, da sie nicht unabhängig sind)
+    \item Wahrscheinlichkeiten für mehrstufige Modelle: Wenn wir einen Produktraum an ZV haben (die abhängig sind), dann ist die erste ZV gegeben durch unser W-Maß (P), alle anderen jedoch abhängig vom Ergebnis der ZV davor.
+    \item D.h. die Wahrscheinlichkeiten sind bedingt durch alle Zufallsvariablen davor!
+\end{itemize}
+
+\textbf{Multiplikationsformel:}
+\begin{itemize}
+    \item Ist $(\Omega, \mathcal{A}, P)$ ein W-Raum, so gilt für $A_1, \dots, A_n \in \mathcal{A}$ und $A := A_1 \cap \dots \cap A_n$ mit $P(A) >0:$
+    \item $P(A) = P(A_1) \cdot P(A_2|A_1) \cdot P(A_3|A_1 \cap A_2) \cdot \dots \cdot P(A_n|A_1 \cap \dots \cap A_{n-1}) $ wenn $A:= A_1 \cap \dots \cap A_n$ und $P(A) >0$
+    \item Beweis: Def. einsetzen von bedingter Wahrscheinlichkeit + Kürzen
+\end{itemize}
+
+\textbf{Beispiel: Ziegenproblem}
+
+\begin{itemize}
+    \item $a :=$ Auto, $n_1:=$ Niete 1, $n_2:=$ Niete 2, $n=$3
+    \item $\Omega = \{a,n_1,n_2\}^3$
+    \item $X_1: (\omega_1,\omega_2,\omega_3) \mapsto \omega_1$ (gleichverteilt); Falls $\omega_1 = a$ dann kann der Moderator aus den Nieten ziehen: $\Rightarrow X_2: (\omega_1,\omega_2,\omega_3) \mapsto \omega_2$ führt zu verschiedenen Verteilungen (bedingt nach 1)
+    \item Hier ist es wichtig eine Fallunterscheidung nach dem Verhalten des Teilnehmers zu machen (immer Tür behalten/Zufall/wechseln entscheiden)
+    \item $\Rightarrow$ Mittels Baumdiagrammen kann man sehen, dass die dritte Variante die beste ist ($\frac{1}{3}$ vs $\frac{1}{2}$ vs $\frac{2}{3}$)
+\end{itemize}
+
+\section{Stochastische Unabhängigkeit}
+
+\textbf{Definition: Stochastische Unabhängigkeit}
+
+\begin{itemize}
+    \item Zwei Ereignisse A und B sind stochastisch unabhängig wenn die Wahrscheinlichkeit des Eintretens von A nicht beeinflusst wird, dass B eingetreten ist und umgekehrt. $P(A|B) = P(A) \And P(B|A) = P(B)$
+    \item $\Rightarrow P(A \cap B) = P(A) \cdot P(B)$ (aus Definition)
+\end{itemize}
+
+\textbf{Unabhängigkeit von Ereignisfamilien}
+
+\begin{itemize}
+    \item Es sei $(\Omega, \mathcal{A}, P)$ ein W-Raum. Eine Familie $(A_i)_{i \in I}$ von Ereignissen in $\mathcal{A}$ heißt stochastisch unabhängig bezüglich P, wenn für jede endliche Teilmenge $\emptyset \neq J \subseteq  I$ gilt:
+    \item $P(\cap_{j \in J} A_j) = \prod_{j \in J} P(A_j)$
+\end{itemize}
+
+\textbf{Unabhängigkeit von ZV-Familien}
+
+\begin{itemize}
+    \item Es sei $(\Omega, \mathcal{A}, P)$ ein W-Raum. Eine Familie $(Y_i)_{i \in I}$ von ZVs: $Y_i : (\Omega,\mathcal{A}) \mapsto (\Omega_I,\mathcal{A}_i)$ heißt unabhängig bezüglich P wenn für jede endliche Teilmenge $\emptyset \neq J \subseteq I$ und alle $A_j \in \mathcal{A}_j$ mit $j \in J$ gilt: $P(\cap_{\{Y_j \in A_j\}}) = \prod P(Y_j \in A_j)$
+\end{itemize}
+
+\end{document}
