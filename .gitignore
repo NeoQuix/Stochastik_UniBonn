@@ -6,3 +6,6 @@
 *.pdf
 *.synctex.gz
 
+# Whitelist some Stuff
+!/Klausuraufgaben2021/*.pdf
+
