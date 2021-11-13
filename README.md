@@ -26,7 +26,7 @@ Da ich keine Lust hatte über 90 Aufgaben in LaTeX zuschreiben, sind die meisten
 
 Als weitere Lösungsquelle kann ich nur das [Overleaf Projekt](https://www.overleaf.com/4881732585fqgnvfvhxsnc) empfehlen. 
 
-Diese Lösung wurde unabhängig vom Overleaf Projekt erstellt, jedoch paar Tage vor der Klausur (18.09.21) mit diesem verglichen. 
+Diese Lösung wurde unabhängig vom Overleaf Projekt erstellt, jedoch paar Tage vor der Klausur (18.09.21) mit der Stocha_Aufgabenpool_Discord.pdf verglichen. 
 
 ## Verbesserungen/Ergänzungen + Anmerkung zur Klausur
 Falls Leute Lust haben gewisse Sachen zu verbessern können diese sich gerne bei mir melden/einen Pull Request etc. erstellen.   
