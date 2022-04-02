@@ -1,6 +1,30 @@
 # Repo für Stochastik (Informatiker)
 __Disclaimer:__  Alle Dateien wurden im SS21 erstellt, auf Basis der Stocha Folien und des Buches "Stochastik"- von Hans-Otto Georgii.     
-Es gibt __keine__ Garantie auf Richtigkeit/Vollständigkeit!     
+Es gibt __keine__ Garantie auf Richtigkeit/Vollständigkeit!  
+
+## Kompilieren
+Da scheinbar viele nur mit Overfleaf arbeiten und k.A. haben wie man "raw" LateX kompiliert hier eine kleine Anleitung:
+
+### Linux
+1. Downloaded TeX Live (oder eine andere LaTeX Distribution eurer Wahl) über dem packagemanager eures Vertrauens.
+    - ggf. ist texlive gesplitet in mehrere Pakete, dann installiert die wichtigsten (z.B. core, science, math, pictures etc.)
+
+    - wenn später Pakete fehlen wird euch das schnell auffallen
+
+    - ggf. latexmk downloaden (meistens schon in texlive vorhanden) + deren dependencies (perl stuff; biber)
+
+2. latexmk -pdf im Ordner mit der *.tex und fertig
+
+### Windows 
+1. Entweder die Schritte oben mittels WSL machen (Ubuntu z.B. mit apt)
+
+2. MikTeX downloaden/installieren und auch wieder via. latexmk
+
+
+### Code - OSS / VS-Code
+Mit "LateX Workshop" hat man eine sehr gute Integration und kann alles in VS Code schreiben. 
+
+Features sind z.B. im Fenster live pdf, automatisches kompilieren beim Speichern, Struktur Tree, Snippets + TikZ Integration, BibTeX Sachen etc..
 
 ## Ordner Struktur 
 ### Kapitel 2-9
