@@ -3,7 +3,6 @@
 *.fdb_latexmk
 *.fls
 *.log
-*.pdf
 *.synctex.gz
 
 # Whitelist some Stuff
