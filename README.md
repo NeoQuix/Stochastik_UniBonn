@@ -60,3 +60,8 @@ D.h. es wurden keine Werte geändert, obwohl dies ja im Aufgabenpool steht.
 Dennoch würde ich dem nicht ganz vertrauen und Aufgaben immer genau lesen! 
 
 Viel Erfolg/Glück an die armen Leute die Stocha noch hören müssen :D
+
+## Update 18.07.22
+Hab Teile von Bereich 8/9 die auf Papier waren ergänzt.
+Leider ist die Reihenfolge beim Scannen falsch, sodass manche Aufgaben aus Bereich 9 in Bereich 8 sind.
+Alle anderen Verteilungen etc. habe ich nicht mehr, aber die sollten sehr leicht sein wenn man die anderen Aufgaben verstanden hat.
