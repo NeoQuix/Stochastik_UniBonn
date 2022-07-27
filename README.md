@@ -65,3 +65,11 @@ Viel Erfolg/Glück an die armen Leute die Stocha noch hören müssen :D
 Hab Teile von Bereich 8/9 die auf Papier waren ergänzt.
 Leider ist die Reihenfolge beim Scannen falsch, sodass manche Aufgaben aus Bereich 9 in Bereich 8 sind.
 Alle anderen Verteilungen etc. habe ich nicht mehr, aber die sollten sehr leicht sein wenn man die anderen Aufgaben verstanden hat.
+
+## Update 27.07.22
+Manche Lösungen von den Markov Aufgaben haben einen Flüchtigkeitsfehler. 
+Für den Ergodensatz ist statt der transponierten Matrix die normale Übergangsmatrix verwendet worden, sodass das Gaußen und die resultierende W-Funktion p (Grenzverteilung) falsch sind!
+D.h. beim selbst lösen/lernen darauf achten, die transponierte Version zu verwenden, statt die normale.
+Die Theorie und die Rechenwege sollten dennoch korrekt sein.
+
+Habe die Aufgaben wo der Fehler vorkommt mit blau markiert, damit nicht jemand den gleichen Fehler macht.
